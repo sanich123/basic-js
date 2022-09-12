@@ -19,6 +19,21 @@ const { NotImplementedError } = require('../extensions/index.js');
  * reverseMachine.decrypt('AEIHQX SX DLLU!', 'alphonse') => '!NWAD TA KCATTA'
  * 
  */
+
+function vigenereCipher(string1, string2) {
+    let result = '';
+
+    for (let i = 0; i < string1.length; i++) {
+        const firstIndex = string1[i].charCodeAt() - 97;
+        const secondIndex = string2[i].charCodeAt() - 97;
+        const cipher = (firstIndex + secondIndex) % 26;
+        result += String.fromCharCode(cipher + 97)
+    }
+    return result;
+}
+
+console.log(vigenereCipher('attack a', 'alphonse'))
+console.log(`${String.fromCharCode(97)}`)
 class VigenereCipheringMachine {
   encrypt() {
     throw new NotImplementedError('Not implemented');
