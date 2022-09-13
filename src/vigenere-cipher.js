@@ -32,8 +32,15 @@ class VigenereCipheringMachine {
     }
     return map;
   }
+  _getRightCharCode(char) {
+    if (char.toLowerCase() === char) {
+        return char.charCodeAt() - 97;
+    } else {
+        return char.charCodeAt() - 65;
+    }
+  }
   _getCodeToAllLength(cleanedWord, code) {
-    const length = Math.floor(cleanedWord.length / code.length);
+    const length = Math.floor(cleanedWord.length /  code.length);
     const rest = cleanedWord.length % code.length;
     return `${code.repeat(length)}${code.slice(0, rest)}`;
   }
@@ -55,8 +62,8 @@ class VigenereCipheringMachine {
     const nonAlphabetSymbols = this._getNonAlphabet(phrase);
 
     for (let i = 0; i < cleanedWord.length; i++) {
-      const numberOfChar = cleanedWord[i].charCodeAt() - 65;
-      const numberOfCharInKey = codeToAllLength[i].charCodeAt() - 97;
+      const numberOfChar = this._getRightCharCode(cleanedWord[i]);
+      const numberOfCharInKey = this._getRightCharCode(codeToAllLength[i]);
       const decryptCipher = (numberOfChar - numberOfCharInKey + 26) % 26;
       result.push(String.fromCharCode(decryptCipher + 65));
     }
@@ -77,8 +84,8 @@ class VigenereCipheringMachine {
     const nonAlphabetSymbols = this._getNonAlphabet(phrase);
 
     for (let i = 0; i < cleanedWord.length; i++) {
-      const numberOfChar = cleanedWord[i].charCodeAt() - 97;
-      const numberOfCharInKey = codeToAllLength[i].charCodeAt() - 97;
+      const numberOfChar = this._getRightCharCode(cleanedWord[i]);
+      const numberOfCharInKey = this._getRightCharCode(codeToAllLength[i]);
       const encryptCipher = (numberOfChar + numberOfCharInKey) % 26;
       result.push(String.fromCharCode(encryptCipher + 65));
     }
